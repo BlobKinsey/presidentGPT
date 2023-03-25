@@ -1,9 +1,7 @@
+FROM ghcr.io/coqui-ai/tts-cpu
 
-
-FROM python:3.9-slim-buster
-
-RUN apt update
-RUN apt install espeak -y
+#RUN apt update
+#RUN apt install espeak -y
 
 WORKDIR /app
 COPY . ./
@@ -13,7 +11,8 @@ RUN pip install  requests
 RUN pip install  gradio
 RUN pip install  fastapi
 RUN pip install  uvicorn
-RUN pip install  TTS
+#RUN pip install  TTS
+RUN pip install  openai
 RUN pip install  python-dotenv
 
 

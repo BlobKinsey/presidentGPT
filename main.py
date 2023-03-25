@@ -54,7 +54,7 @@ def genTTS(proposition):
 
     response = openai.Completion.create(
     model="text-davinci-003",
-    prompt="Corriger la phrase de user en utilisant l'example ci desous en y ajouter des mot pour former un discourt en une phrase\n\nPar example :\n\nUser :\nJe trouver manifestation très pénibles\n\nAssistant :\nJe trouve les manifestations très  pénibles, cela ne correspond pas a ma vision de la décromatie\n\nUser :\n " + proposition,
+    prompt="Corriger la syntaxe de la  phrase de user en utilisant l'example ci desous en y ajouter des mot pour former un discourt en une phrase en prenant en compte la question : \n\nPar example :\n\nUser :\nJe trouver manifestation très pénibles\n\nAssistant :\nJe trouve les manifestations très  pénibles\n\nUser :\n " + proposition,
     temperature=1,
     max_tokens=595,
     top_p=1,
@@ -107,5 +107,21 @@ ttsInterface = gr.Interface(
 )
 app = gr.mount_gradio_app(app, ttsInterface, "/api/generate" )
 
+
+def ttsOnly(text, model):
+    # Initialize the TTS API
+    tts = TTS(model_name="tts_models/fr/css10/vits", progress_bar=True, gpu=False)
+    filename = time.strftime("%Y%m%d-%H%M%S") + ".wav"
+    tts.tts_to_file(text, file_path=filename)
+
+    # save the audio file un the static folder check if folder exists
+    if not os.path.exists("static"):
+        os.makedirs("static")
+    os.rename(filename, "static/" + filename)
+
+    url = domain_url + "/static/" + filename
+
+    # return the audio file path and the message
+    return "static/" + filename, url, text
 
 # Then run `uvicorn run:app` from the terminal and navigate to http://localhost:8000/gradio.

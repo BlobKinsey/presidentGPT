@@ -2,5 +2,7 @@ version: "3.7"
 services:
   president-gpt:
     build: .
+    env_file:
+      - .env
     ports:
       - "5000:8000"
