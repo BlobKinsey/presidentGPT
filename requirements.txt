@@ -1,0 +1,7 @@
+requests
+gradio
+fastapi
+uvicorn
+TTS
+python-dotenv
+openai
