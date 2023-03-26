@@ -13,7 +13,26 @@ from dotenv import load_dotenv
 import openai
 
 
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
+
+cred = credentials.Certificate("firebase.json")
+firebase_admin.initialize_app(cred)
+
+
+
 app = FastAPI()
+
+# Create a route /api/controller
+@app.get("/api/display")
+async def controller():
+    # get firebase collection 
+    db = firestore.client()
+    doc_ref = db.collection(u'displays').document(u'_main')
+    doc = doc_ref.get()
+    # return the data
+    return doc.to_dict()
 
 # check if static folder exists
 if not os.path.exists("static"):

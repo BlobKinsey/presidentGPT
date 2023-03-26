@@ -5,3 +5,4 @@ uvicorn
 TTS
 python-dotenv
 openai
+firebase-admin

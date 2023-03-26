@@ -14,6 +14,7 @@ RUN pip install  uvicorn
 #RUN pip install  TTS
 RUN pip install  openai
 RUN pip install  python-dotenv
+RUN pip install  firebase-admin
 
 
 ENTRYPOINT [ "uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000" ]
